@@ -1,0 +1,1195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>After the Silence: Music and the Black Death</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bone: #f4f1ea;
+        --bone-2: #eae5da;
+        --night: #15130f;
+        --night-soft: #2a2620;
+        --ink: #1c1916;
+        --muted: #6b6358;
+        --accent: #c83a25;
+        --accent-deep: #9c2a18;
+        --line: rgba(28, 25, 22, 0.14);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Hanken Grotesk", sans-serif;
+        background: var(--bone);
+        color: var(--ink);
+        font-size: 18px;
+        line-height: 1.72;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      #progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0;
+        background: var(--accent);
+        z-index: 200;
+        transition: width 0.1s linear;
+      }
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(244, 241, 234, 0.82);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+      }
+      .nav-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .brand {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 1.15rem;
+        letter-spacing: -0.02em;
+      }
+      .brand span {
+        color: var(--accent);
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 1.6rem;
+        flex-wrap: wrap;
+      }
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.82rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      nav a:hover {
+        color: var(--accent);
+      }
+      @media (max-width: 760px) {
+        nav ul {
+          display: none;
+        }
+      }
+      .hero {
+        background: var(--night);
+        color: var(--bone);
+        min-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 6rem 2rem 4rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .hero .meta {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        font-size: 0.78rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(244, 241, 234, 0.55);
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: rise 0.9s ease 0.1s forwards;
+      }
+      .hero .meta .accent {
+        color: var(--accent);
+      }
+      .hero h1 {
+        font-family: "Fraunces", serif;
+        font-weight: 300;
+        font-size: clamp(3rem, 11vw, 9rem);
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        max-width: 14ch;
+        opacity: 0;
+        animation: rise 1s ease 0.25s forwards;
+      }
+      .hero h1 em {
+        font-style: italic;
+        font-weight: 400;
+        color: var(--accent);
+      }
+      .hero .deck {
+        font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+        line-height: 1.45;
+        max-width: 46ch;
+        margin-top: 2.2rem;
+        color: rgba(244, 241, 234, 0.85);
+        font-weight: 300;
+        opacity: 0;
+        animation: rise 1s ease 0.5s forwards;
+      }
+      .hero .deck b {
+        color: var(--bone);
+        font-weight: 600;
+      }
+      .hero .ghost {
+        position: absolute;
+        right: -2%;
+        bottom: -8%;
+        font-family: "Fraunces", serif;
+        font-weight: 300;
+        font-size: 34vw;
+        line-height: 1;
+        color: rgba(200, 58, 37, 0.07);
+        pointer-events: none;
+        user-select: none;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(34px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+      section {
+        padding: 6rem 0 2rem;
+      }
+      .kicker {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        margin-bottom: 1.4rem;
+      }
+      .kicker .no {
+        font-family: "Fraunces", serif;
+        font-size: 1rem;
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .kicker .label {
+        font-size: 0.78rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      h2 {
+        font-family: "Fraunces", serif;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        font-size: clamp(2.1rem, 5.5vw, 3.4rem);
+        line-height: 1.05;
+        margin-bottom: 1.6rem;
+      }
+      h2 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      h3 {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 1.35rem;
+        margin: 2.4rem 0 0.6rem;
+        letter-spacing: -0.01em;
+      }
+      p {
+        margin-bottom: 1.3rem;
+      }
+      .lead {
+        font-size: 1.32rem;
+        line-height: 1.55;
+        font-weight: 300;
+        color: var(--ink);
+      }
+      .lead.first::first-letter {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        float: left;
+        font-size: 3.6rem;
+        line-height: 0.82;
+        padding: 0.4rem 0.7rem 0 0;
+        color: var(--accent);
+      }
+      em.term {
+        font-style: italic;
+      }
+      .cite {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-style: italic;
+        margin: -0.4rem 0 1.7rem;
+        padding-left: 1rem;
+        border-left: 2px solid var(--line);
+      }
+      .note {
+        background: var(--bone-2);
+        border-radius: 8px;
+        padding: 0.5rem 0.9rem;
+        font-size: 0.82rem;
+        color: var(--muted);
+        margin: 1.4rem 0;
+        font-style: italic;
+      }
+      .note b {
+        color: var(--accent-deep);
+        font-style: normal;
+        font-weight: 600;
+      }
+      .writehere {
+        border: 1px solid var(--accent);
+        border-radius: 10px;
+        padding: 1.6rem 1.8rem;
+        margin: 2rem 0;
+        background: linear-gradient(
+          0deg,
+          rgba(200, 58, 37, 0.04),
+          rgba(200, 58, 37, 0.04)
+        );
+      }
+      .writehere .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.74rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.7rem;
+      }
+      .writehere .tag::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .writehere p {
+        font-size: 1rem;
+        color: var(--night-soft);
+        margin-bottom: 0.5rem;
+      }
+      .writehere ul {
+        margin: 0.5rem 0 0 1.1rem;
+        font-size: 0.97rem;
+        color: var(--night-soft);
+      }
+      .writehere li {
+        margin-bottom: 0.45rem;
+      }
+      .imgslot {
+        border: 1px dashed var(--muted);
+        border-radius: 10px;
+        background: var(--bone-2);
+        aspect-ratio: 16/9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 1.5rem;
+        margin: 2.2rem 0;
+        color: var(--muted);
+      }
+      .imgslot .ttl {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        color: var(--ink);
+        font-size: 1.05rem;
+      }
+      .imgslot .hint {
+        font-size: 0.85rem;
+        margin-top: 0.4rem;
+        max-width: 46ch;
+      }
+      .imgslot .ic {
+        font-size: 1.6rem;
+        margin-bottom: 0.4rem;
+        opacity: 0.5;
+      }
+      .audioslot {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        background: var(--night);
+        color: var(--bone);
+        border-radius: 10px;
+        padding: 1.3rem 1.5rem;
+        margin: 2rem 0;
+      }
+      .audioslot .play {
+        flex: 0 0 auto;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1.5px solid var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent);
+        font-size: 0.9rem;
+      }
+      .audioslot .label {
+        font-size: 0.74rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+      }
+      .audioslot .hint {
+        font-size: 0.92rem;
+        color: rgba(244, 241, 234, 0.8);
+        font-weight: 300;
+      }
+      .fig {
+        margin: 2.2rem 0;
+      }
+      .fig img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 10px;
+      }
+      .fig figcaption {
+        font-size: 0.84rem;
+        color: var(--muted);
+        margin-top: 0.55rem;
+        line-height: 1.5;
+      }
+      .fig figcaption a {
+        color: var(--muted);
+      }
+      .media {
+        margin: 2rem 0;
+      }
+      .media .frame {
+        position: relative;
+        display: block;
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: 10px;
+        overflow: hidden;
+        background: var(--night);
+        text-decoration: none;
+      }
+      .media .frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0.92;
+        transition: opacity 0.2s;
+      }
+      .media .frame:hover img {
+        opacity: 1;
+      }
+      .media .frame .pbtn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.55);
+        border: 2px solid var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent);
+        font-size: 1.3rem;
+        padding-left: 4px;
+      }
+      .media .frame:hover .pbtn {
+        background: var(--accent);
+        color: var(--night);
+      }
+      .media .frame .yt {
+        position: absolute;
+        bottom: 10px;
+        right: 12px;
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(244, 241, 234, 0.9);
+        background: rgba(0, 0, 0, 0.55);
+        padding: 3px 8px;
+        border-radius: 4px;
+      }
+      .media .cap {
+        margin-top: 0.6rem;
+      }
+      .media .cap .label {
+        font-size: 0.74rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+      }
+      .media .cap .hint {
+        font-size: 0.9rem;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+      .refs {
+        margin-top: 1.4rem;
+      }
+      .ref {
+        padding-left: 1.7em;
+        text-indent: -1.7em;
+        margin: 0 0 0.85rem;
+        line-height: 1.6;
+        font-size: 0.97rem;
+        color: var(--bone);
+        font-weight: 300;
+      }
+      .ref em {
+        font-style: italic;
+      }
+      .ref a {
+        color: var(--accent);
+        text-decoration: none;
+        word-break: break-word;
+      }
+      .ref.todo {
+        color: rgba(244, 241, 234, 0.55);
+        font-style: italic;
+      }
+      .split {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        margin: 1.8rem 0;
+      }
+      .split .col {
+        border-top: 2px solid var(--ink);
+        padding-top: 1rem;
+      }
+      .split .col.b {
+        border-top-color: var(--accent);
+      }
+      .split h3 {
+        margin-top: 0.4rem;
+      }
+      .split p {
+        font-size: 0.98rem;
+        color: var(--muted);
+        margin-bottom: 0;
+      }
+      @media (min-width: 680px) {
+        .split {
+          grid-template-columns: 1fr 1fr;
+          gap: 2.2rem;
+        }
+      }
+      .pull {
+        font-family: "Fraunces", serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin: 3rem 0;
+        padding-left: 1.4rem;
+        border-left: 3px solid var(--accent);
+      }
+      hr.rule {
+        border: none;
+        border-top: 1px solid var(--line);
+        margin: 0;
+      }
+      .sources {
+        background: var(--night);
+        color: var(--bone);
+        margin-top: 4rem;
+      }
+      .sources .wrap {
+        padding-top: 5rem;
+        padding-bottom: 4rem;
+      }
+      .sources h2 {
+        color: var(--bone);
+      }
+      .sources .kicker .label {
+        color: rgba(244, 241, 234, 0.5);
+      }
+      .intro-note {
+        color: rgba(244, 241, 234, 0.7);
+        font-weight: 300;
+        margin-bottom: 2rem;
+      }
+      .ai-note {
+        color: rgba(244, 241, 234, 0.7);
+        font-weight: 300;
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(244, 241, 234, 0.12);
+        font-size: 0.92rem;
+        line-height: 1.65;
+      }
+      .ai-note b {
+        color: rgba(244, 241, 234, 0.9);
+        font-weight: 600;
+      }
+      .src {
+        padding: 1.3rem 0;
+        border-bottom: 1px solid rgba(244, 241, 234, 0.12);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+      }
+      .src:last-child {
+        border-bottom: none;
+      }
+      .src .t {
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .src .c {
+        font-family: "Fraunces", serif;
+        font-size: 1.12rem;
+        color: var(--bone);
+      }
+      .src .c em {
+        font-style: italic;
+      }
+      .src .n {
+        font-size: 0.92rem;
+        color: rgba(244, 241, 234, 0.65);
+        font-weight: 300;
+      }
+      footer {
+        background: #0e0c09;
+        color: rgba(244, 241, 234, 0.55);
+        text-align: center;
+        padding: 2.5rem 2rem;
+        font-size: 0.85rem;
+      }
+      footer b {
+        color: var(--bone);
+        font-weight: 600;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="progress"></div>
+
+    <nav>
+      <div class="nav-inner">
+        <div class="brand">After the <span>Silence</span></div>
+        <ul>
+          <li><a href="#pestilence">Pestilence</a></li>
+          <li><a href="#question">The Question</a></li>
+          <li><a href="#darkened">Darkened</a></li>
+          <li><a href="#untouched">Untouched</a></li>
+          <li><a href="#devotion">Devotion</a></li>
+          <li><a href="#verdict">Verdict</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="ghost">1348</div>
+      <div class="hero-grid">
+        <div class="meta">
+          <span>Medieval &amp; Renaissance Music</span>
+          <span class="accent">Final Project</span>
+          <span>University of New Brunswick</span>
+        </div>
+        <h1>After the <em>Silence</em></h1>
+        <p class="deck">
+          Did the Black Death truly reshape European music, or did the songs of
+          a dying continent carry on, strangely untouched?
+          <b>And why can't scholars agree?</b>
+        </p>
+      </div>
+    </header>
+
+    <!-- 1 -->
+    <section id="pestilence" class="reveal">
+      <div class="wrap">
+        <div class="kicker">
+          <span class="no">01</span><span class="label">The Pestilence</span>
+        </div>
+        <h2>A catastrophe with no precedent</h2>
+        <p class="lead first">
+          The numbers are still debated. Older estimates put it at a third to
+          half of Europe's population, but more recent historians have gone
+          higher. John Aberth estimates 51 to 58 percent (Aberth, 2021), and Ole
+          Benedictow argues over 60 percent, which would be around 52 million
+          people out of roughly 80 million before the plague (Benedictow, 2021).
+          Economic historians who look at city records tend to land closer to 40
+          percent (Jedwab et al., 2022).
+        </p>
+        <p>
+          The reason there's such a wide range comes down to the sources being
+          unreliable. Contemporary writers tended to round up and use dramatic
+          figures, and the more detailed records that historians prefer, like
+          tax rolls, death duties, and wills, are more precise but incomplete
+          and varied a lot by region (Benedictow, 2021). So the honest answer is
+          really a range rather than a single number, and that uncertainty is
+          kind of central to what this project is about.
+        </p>
+        <p>
+          Whatever the exact toll, how it spread is better documented. It most
+          likely started in Central Asia, made its way to the Genoese trading
+          post of Caffa on the Black Sea, and then came by ship to Sicily and
+          the Italian ports in late 1347. From there it followed trade and
+          pilgrimage routes into France, the Low Countries, England, and the
+          German lands over the next four years or so, and almost nowhere in
+          Europe was left untouched (Aberth, 2021).
+        </p>
+        <h3>How a dying Europe explained itself</h3>
+        <p>
+          What mattered for music wasn't just the dying but how people explained
+          it. Medieval writers generally pointed to two linked causes: the
+          movements of the heavens and the wrath of God. In 1348 the medical
+          faculty of the University of Paris blamed the outbreak on a
+          conjunction of Saturn, Jupiter, and Mars that had supposedly occurred
+          in 1345 and corrupted the air (Aberth, 2021). Others saw it more
+          simply as divine punishment for human sin. Guillaume de Machaut, who
+          was a poet, cleric, and the leading composer of the time, lived
+          through the plague and in 1349 gave the same kind of astrological
+          explanation for a world that had been emptied by the dead (Machaut,
+          1349).
+        </p>
+        <p>
+          If the plague came from the stars and from God's anger, then the music
+          written in response to it was aimed at those same powers. That's why
+          the most obvious musical reaction to the Black Death isn't really
+          found in the concert repertory but in music written for prayer.
+        </p>
+
+        <figure class="fig">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Triomf_de_la_mort_de_Buffalmacco%2C_camposanto_de_Pisa.JPG"
+            alt="Buffalmacco's fresco The Triumph of Death in the Camposanto at Pisa, with the living confronted by Death and the dead."
+          />
+          <figcaption>
+            Buonamico Buffalmacco, <em>The Triumph of Death</em> (painted 1336
+            to 1341), fresco, Camposanto Monumentale, Pisa. Photograph by
+            Joanbanjo,
+            <a
+              href="https://creativecommons.org/licenses/by-sa/3.0"
+              target="_blank"
+              rel="noopener"
+              >CC BY-SA 3.0</a
+            >, via Wikimedia Commons.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+    <hr class="rule" />
+
+    <!-- 2 -->
+    <section id="question" class="reveal">
+      <div class="wrap">
+        <div class="kicker">
+          <span class="no">02</span><span class="label">The Question</span>
+        </div>
+        <h2>Two truths that <em>can't</em> both be whole</h2>
+        <p class="lead">
+          It seems obvious that a disaster this large must have darkened the
+          music of its time, but that assumption is exactly what scholars argue
+          about, and the evidence really does pull in two directions at once.
+        </p>
+        <p>
+          One reading is fairly intuitive, which is that fourteenth century
+          music was saturated with grief, dread, and an obsession with death.
+          The other is more cynical, pointing out that much of the music that
+          survived from the plague years sounds largely unconcerned, as if the
+          disaster were happening somewhere else entirely. Both positions have
+          solid evidence behind them, which is why the debate has never really
+          been settled.
+        </p>
+        <p>
+          The sections that follow try to make the strongest case for each side,
+          starting with the argument that music darkened, then the argument that
+          it carried on more or less as before, and then looking at the sacred
+          music that responded to the plague most directly. After that, the
+          verdict is yours to make.
+        </p>
+      </div>
+    </section>
+    <hr class="rule" />
+
+    <!-- 3 -->
+    <section id="darkened" class="reveal">
+      <div class="wrap">
+        <div class="kicker">
+          <span class="no">03</span><span class="label">Argument A</span>
+        </div>
+        <h2>The case that music <em>darkened</em></h2>
+        <p class="lead">
+          The firmest evidence for a direct musical response is also the rawest.
+          As the plague crossed the Alps, bands of flagellants moved from town
+          to town singing <em class="term">Geisslerlieder</em>, which were plain
+          vernacular call-and-response songs begging God to lift the plague
+          (Salmen, 2001).
+        </p>
+        <p>
+          The flagellants were a mass penitential movement that grew
+          dramatically in 1348 and 1349. They believed the plague was God's
+          punishment for human sin, so processions of penitents would march
+          between towns and whip themselves publicly as a form of communal
+          atonement, hoping to turn aside divine anger. The movement spread
+          through the German lands and the Low Countries until it started to
+          alarm the Church, and Pope Clement VI condemned it in 1349. Their
+          songs were sung as they marched, strophic and in German rather than
+          Latin, and simple enough that crowds could join in. This was
+          collective prayer rather than anything like a performance (Salmen,
+          2001).
+        </p>
+        <p>
+          We only know these songs exist because a priest named Hugo Spechtshart
+          of Reutlingen was troubled enough by what he witnessed to write them
+          down in his chronicle of 1349, which was one of the earliest acts of
+          folk song collection in European history. One surviving melody,
+          <em class="term">Maria muoter reinu mait</em>, can still be heard
+          today (Salmen, 2001). Here at least, the connection between the
+          catastrophe and the music it produced is clear.
+        </p>
+        <h3>A culture saturated with death</h3>
+        <p>
+          Around that core sits a wider preoccupation with death. The
+          <em class="term">memento mori</em> impulse, meaning "remember that you
+          must die," runs through pieces like the dance-song
+          <em class="term">Ad mortem festinamus</em>, which translates as "we
+          hasten toward death" (Salmen, 2001). It also runs through the visual
+          tradition of the <em class="term">danse macabre</em>, in which a
+          skeletal Death leads pope and king, merchant and peasant alike in a
+          single procession to the grave, a vision of death as the great
+          leveller.
+        </p>
+        <p>
+          But there's a caveat worth being honest about, and it's the kind of
+          caveat that makes this a real argument rather than just a list of
+          examples. <em class="term">Ad mortem festinamus</em> survives in the
+          <em class="term">Llibre Vermell de Montserrat</em>, which dates from
+          around 1399 (Salmen, 2001), and the large
+          <em class="term">danse macabre</em> murals are fifteenth century
+          (Oosterwijk &amp; Kn&ouml;ll, 2011). Both draw on a tradition of
+          meditating on death that predates 1348 by several centuries, which
+          means they reveal a civilization that was already deeply immersed in
+          thoughts of death rather than one that was changed by the plague. They
+          don't establish on their own that the Black Death actually caused any
+          of this. So the strongest version of this argument really rests on the
+          flagellant songs as its hard evidence, with everything else serving
+          more as atmosphere.
+        </p>
+
+        <figure class="media">
+          <a
+            class="frame"
+            href="https://www.youtube.com/watch?v=C900OyCoOUQ"
+            target="_blank"
+            rel="noopener"
+            ><img
+              src="https://img.youtube.com/vi/C900OyCoOUQ/hqdefault.jpg"
+              alt="Recording of Maria muoter reinu mait by the ensemble Krless"
+              loading="lazy"
+            /><span class="pbtn">&#9658;</span
+            ><span class="yt">Play on YouTube</span></a
+          >
+          <figcaption class="cap">
+            <div class="label">Listen &middot; a flagellant song</div>
+            <div class="hint">
+              <em>Maria muoter reinu mait</em> (1349), performed by the
+              early-music ensemble Krless. Listen for the call-and-response: a
+              leader sings each verse and the group answers in unison,
+              unaccompanied, much as Hugo Spechtshart described it.
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+    <hr class="rule" />
+
+    <!-- 4 -->
+    <section id="untouched" class="reveal">
+      <div class="wrap">
+        <div class="kicker">
+          <span class="no">04</span><span class="label">Argument B</span>
+        </div>
+        <h2>The case that music <em>carried on</em></h2>
+        <p class="lead">
+          The skeptical reading begins with a date. The defining stylistic
+          revolution of the century, the <em class="term">Ars Nova</em>, was
+          already well underway before the plague arrived.
+        </p>
+        <p>
+          The <em class="term">Ars Nova</em>, meaning "new art," was a French
+          movement that took its name from a treatise associated with Philippe
+          de Vitry around 1322 ("Philippe de Vitry," n.d.). Its innovations were
+          technical but far-reaching, introducing a more flexible system of
+          notation that for the first time allowed beats to be divided into two
+          as easily as three, and making possible intricate rhythmic structures
+          like isorhythm, where a repeating rhythmic pattern organises an entire
+          section of music. It was a deliberate break from the older
+          <em class="term">Ars Antiqua</em> of the thirteenth century, and it
+          was new enough that the people living through it genuinely felt it as
+          a rupture.
+        </p>
+        <p>
+          It provoked a strong reaction. Around 1324 and 1325, Pope John XXII
+          issued a decree complaining that the new techniques were burying the
+          sacred words and exciting the senses rather than calming the soul
+          ("Philippe de Vitry," n.d.). He singled out the choppy device called
+          hocket, the flood of rapid small notes, and the piling up of extra
+          voices. The crucial point for this argument is the timing. That
+          controversy was already raging in the 1320s, a full generation before
+          1348. Whatever was transforming fourteenth century music was, in large
+          part, already transforming it before the plague arrived.
+        </p>
+        <h3>The silence of Machaut</h3>
+        <p>
+          Then there is Machaut. He survived the plague, mourned patrons he lost
+          to it, and described it at length in his poetry (Machaut, 1349), yet
+          nothing in his enormous surviving musical output bears any clear
+          textual or musical sign of the disease. If the catastrophe failed to
+          leave a mark on the work of the very composer who wrote about it most
+          vividly, we should be careful about reading it into the music of
+          composers who said nothing about it at all.
+        </p>
+        <p>
+          But the deepest problem is about evidence itself. As Christopher
+          Macklin (2010) points out, the impermanence of performance makes music
+          much harder to study here than literature or painting. A great deal of
+          what was sung in the streets and at deathbeds was never written down,
+          so their absence from the manuscript record might just be a matter of
+          survival rather than evidence that people didn't respond musically at
+          all. And that cuts both ways. It prevents us from confidently saying
+          that music ignored the plague just as much as it prevents us from
+          saying music answered it directly. A careful scholar stops at
+          correlation and resists the temptation to construct a cause.
+        </p>
+
+        <div class="split">
+          <div class="col b">
+            <h3>Continuity, not rupture</h3>
+            <p>
+              The century's stylistic developments may owe more to long-running
+              trends than to any single event.
+            </p>
+          </div>
+          <div class="col b">
+            <h3>A problem of evidence</h3>
+            <p>
+              Survival is uneven and dating uncertain, so reading any one piece
+              as a "response" is harder than it looks.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <hr class="rule" />
+
+    <!-- 5 -->
+    <section id="devotion" class="reveal">
+      <div class="wrap">
+        <div class="kicker">
+          <span class="no">05</span
+          ><span class="label">The Clearest Trace</span>
+        </div>
+        <h2>The sound of <em>devotion</em></h2>
+        <p class="lead first">
+          If the plague left a clear musical signature anywhere, it's in music
+          of supplication, and that's not really a surprise. Because the disease
+          was understood as a punishment sent by God through the stars, the
+          natural response was to petition God and the saints directly. The
+          clearest example of that response is the hymn
+          <em class="term">Stella celi extirpavit</em>, a Marian prayer written
+          plainly as a plea for deliverance from pestilence (Macklin, 2010).
+        </p>
+        <p>
+          Christopher Macklin (2010) traces its history across late medieval
+          Europe and connects it to the Franciscans, the friars who nursed the
+          sick, died in large numbers, and carried with them the same
+          astrological and medical understanding of disease that the hymn
+          reflects. Its text begs the "star" to restrain the very constellations
+          blamed for causing the sickness, folding the era's medical theory
+          directly into prayer. It's worth noting that this is a fifteenth
+          century hymn, which is a reminder that the plague's musical afterlife
+          stretched well beyond the first wave of 1348, since outbreaks kept
+          recurring for generations afterward.
+        </p>
+        <h3>The saints who guarded against plague</h3>
+        <p>
+          Devotion also gathered around the plague saints. St. Sebastian came
+          first, a martyr who had been killed by a hail of arrows, and since
+          arrows had long been used as a symbol of plague sent down by God he
+          came to be invoked as a protector against it. St. Roch followed later,
+          a pilgrim who was believed to have survived the plague and tended its
+          victims, and who is traditionally shown lifting his robe to reveal a
+          plague sore on his thigh (Chiu, 2017). Their cults produced a body of
+          protective votive music, including settings like Du Fay's
+          <em class="term">O sancte Sebastiane</em> (Du Fay, n.d.).
+        </p>
+        <h3>Medicine or poison?</h3>
+        <p>
+          Underneath all of this lay a real ambivalence about music itself,
+          which Remi Chiu (2017) reconstructs in detail. The thinking was rooted
+          in Galenic medicine, which held that health depended on keeping the
+          body's humours in balance and that emotions, or what were called the
+          "passions of the soul," could tip that balance either way. Because
+          music moved the passions, it could in theory calm a frightened patient
+          and strengthen the body against disease. But by exactly the same
+          logic, the wrong music stirring the wrong passions could inflame the
+          body and leave it more vulnerable to infection. Music was prescribed
+          as medicine and feared as poison at the same time.
+        </p>
+
+        <figure class="media">
+          <a
+            class="frame"
+            href="https://www.youtube.com/watch?v=GqIhpgVgfRQ"
+            target="_blank"
+            rel="noopener"
+            ><img
+              src="https://img.youtube.com/vi/GqIhpgVgfRQ/hqdefault.jpg"
+              alt="Recording of Stella celi extirpavit by The Binchois Consort"
+              loading="lazy"
+            /><span class="pbtn">&#9658;</span
+            ><span class="yt">Play on YouTube</span></a
+          >
+          <figcaption class="cap">
+            <div class="label">Listen &middot; a plague hymn</div>
+            <div class="hint">
+              John Cooke's fifteenth-century setting of
+              <em>Stella celi extirpavit</em>, sung by The Binchois Consort
+              (dir. Andrew Kirkman). The text asks the "star," the Virgin, to
+              hold back the constellations blamed for the plague.
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+    <hr class="rule" />
+
+    <!-- 6 -->
+    <section id="verdict" class="reveal">
+      <div class="wrap">
+        <div class="kicker">
+          <span class="no">06</span><span class="label">The Verdict</span>
+        </div>
+        <h2>So, <em>which</em> does the music tell?</h2>
+        <p class="lead first">
+          My answer is that the Black Death did change European music, but not
+          in the way the question first seems to invite. It didn't darken the
+          style of the age's art music or push its great composers toward grief.
+          What it changed was what people sang to, and what they sang for.
+        </p>
+        <p>
+          The clearest sign of the plague in the musical record isn't a tragic
+          polyphony but a flood of music addressed to the powers thought to
+          cause the disease: the penitential songs of the flagellants, the pleas
+          to the Virgin in <em class="term">Stella celi extirpavit</em>, the
+          votive music for St. Sebastian and St. Roch. The plague is audible
+          where music had a specific task to perform against the plague itself,
+          and that's a meaningful distinction, and the part of the record I find
+          most convincing.
+        </p>
+        <p>
+          What I can't find is the plague in music that wasn't built to answer
+          it. The secular repertoire of the period sounds largely untroubled,
+          and the stylistic revolution that everyone points to, the
+          <em class="term">Ars Nova</em>, was already well underway a generation
+          before 1347. The strongest single piece of evidence for that silence
+          is Guillaume de Machaut, who lived through the catastrophe, wrote
+          about it at length in his poetry, and left no trace of it anywhere in
+          his music. If the disaster didn't surface in the work of the one
+          composer who described it best, I'm not willing to claim it secretly
+          shaped everyone else.
+        </p>
+        <h3>The objection I have to answer</h3>
+        <p>
+          The bigger question is whether I can even know any of this, and I want
+          to be honest about how flimsy the ground is. My strongest piece of
+          evidence, the flagellant songs, exists almost by chance, because one
+          priest happened to write down what he heard in 1349. Most of what was
+          sung in the streets and at deathbeds was never written down at all, so
+          the stillness of the secular record might not be apathy so much as
+          loss. A skeptic could reasonably argue that the most honest verdict is
+          that the evidence is too fractured to support any verdict at all, and
+          I don't think that person is wrong. I would only say that the music we
+          do have all points in one direction, and that a careful argument is
+          allowed to follow its best evidence while staying open to being
+          overturned.
+        </p>
+
+        <h3>Why the disagreement matters</h3>
+        <p>
+          That's why scholars end up disagreeing, and honestly that's the part
+          of this I think is most worth holding onto. The disagreement isn't
+          really about the music itself. It's about what we're allowed to read
+          into an absence. One historian looks at the same gap in the record and
+          sees art turning its back on the disease, while another sees evidence
+          that simply didn't survive. Studying music and the Black Death turns
+          out to be a lesson in the limits of art as a historical witness, and
+          in the difference between a quiet age and a lost voice.
+        </p>
+      </div>
+    </section>
+
+    <!-- sources -->
+    <section id="sources" class="sources reveal">
+      <div class="wrap">
+        <div class="kicker">
+          <span class="no">07</span><span class="label">Bibliography</span>
+        </div>
+        <h2>References</h2>
+        <div class="refs">
+          <p class="ref">
+            Aberth, J. (2021).
+            <em
+              >The Black Death: A new history of the great mortality in Europe,
+              1347&ndash;1500.</em
+            >
+            Oxford University Press.
+          </p>
+          <p class="ref">
+            Benedictow, O. J. (2021).
+            <em>The complete history of the Black Death.</em> Boydell Press.
+          </p>
+          <p class="ref">
+            Chiu, R. (2017).
+            <em>Plague and music in the Renaissance.</em> Cambridge University
+            Press.
+          </p>
+          <p class="ref">
+            Du Fay, G. (n.d.). <em>O sancte Sebastiane</em> [Motet].
+          </p>
+          <p class="ref">
+            Jedwab, R., Johnson, N. D., &amp; Koyama, M. (2022). The economic
+            impact of the Black Death.
+            <em>Journal of Economic Literature, 60</em>(1), 132&ndash;178.
+            <a
+              href="https://doi.org/10.1257/jel.20201639"
+              target="_blank"
+              rel="noopener"
+              >https://doi.org/10.1257/jel.20201639</a
+            >
+          </p>
+          <p class="ref">
+            Machaut, G. de. (1349). <em>Le jugement dou Roy de Navarre</em> [The
+            judgment of the King of Navarre].
+          </p>
+          <p class="ref">
+            Macklin, C. (2010). Plague, performance and the elusive history of
+            the <em>Stella celi extirpavit</em>.
+            <em>Early Music History, 29</em>, 1&ndash;31.
+            <a
+              href="https://doi.org/10.1017/S0261127910000057"
+              target="_blank"
+              rel="noopener"
+              >https://doi.org/10.1017/S0261127910000057</a
+            >
+          </p>
+          <p class="ref">
+            Oosterwijk, S., &amp; Kn&ouml;ll, S. (Eds.). (2011).
+            <em
+              >Mixed metaphors: The danse macabre in medieval and early modern
+              Europe.</em
+            >
+            Cambridge Scholars Publishing.
+          </p>
+          <p class="ref">
+            Philippe de Vitry. (n.d.). In
+            <em>EBSCO research starters.</em> EBSCO Information Services.
+            <a
+              href="https://www.ebsco.com/research-starters/biography/philippe-de-vitry"
+              target="_blank"
+              rel="noopener"
+              >https://www.ebsco.com/research-starters/biography/philippe-de-vitry</a
+            >
+          </p>
+          <p class="ref">
+            Salmen, W. (2001). Geisslerlieder. In
+            <em>The New Grove dictionary of music and musicians</em> (2nd ed.).
+            Macmillan.
+          </p>
+        </div>
+        <p class="ai-note">
+          <b>Note on AI use.</b> The topic, research question, and central argument of this project are my own, and I wrote every section.
+          I did used an AI assistant (Anthropic's Claude) to help with formating the citations in APA, and later to proofread my completed draft by pointing out confusing, unclear sentences and suggest improvement for fluency.
+          I wrote, revised, and verified all content myself.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <b>Minh Nguyen</b> &middot; Medieval &amp; Renaissance Music &middot;
+      University of New Brunswick &middot; 2026
+    </footer>
+
+    <script>
+      const obs = new IntersectionObserver(
+        (es) =>
+          es.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("in");
+          }),
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+      const bar = document.getElementById("progress");
+      addEventListener("scroll", () => {
+        const h = document.documentElement;
+        const p = h.scrollTop / (h.scrollHeight - h.clientHeight);
+        bar.style.width = p * 100 + "%";
+      });
+    </script>
+  </body>
+</html>
